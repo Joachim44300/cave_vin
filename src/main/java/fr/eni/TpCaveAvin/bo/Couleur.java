@@ -2,18 +2,24 @@ package fr.eni.TpCaveAvin.bo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Couleur {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String nom;
 
-	public Couleur(String nom) {
+	public Couleur() {
+
+	}
+
+	public Couleur(int id, String nom) {
 		super();
+		this.id = id;
 		this.nom = nom;
 	}
 

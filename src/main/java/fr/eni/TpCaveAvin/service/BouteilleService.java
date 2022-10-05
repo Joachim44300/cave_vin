@@ -20,6 +20,10 @@ public interface BouteilleService {
 
 	public Region getRegionById(int id);
 
-	void saveBouteille(Bouteille bouteille);
+	public void ajouterBouteille(Bouteille bouteille);
+
+	public void modifierBouteille(Bouteille bouteille);
+
+	public void supprimerBouteille(Integer id);
 
 }

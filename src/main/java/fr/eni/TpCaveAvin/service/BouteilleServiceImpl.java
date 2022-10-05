@@ -64,9 +64,21 @@ public class BouteilleServiceImpl implements BouteilleService {
 	}
 
 	@Override
-	public void saveBouteille(Bouteille bouteille) {
+	public void ajouterBouteille(Bouteille bouteille) {
 		// TODO Auto-generated method stub
 		bouteilleRepository.save(bouteille);
+	}
+
+	@Override
+	public void modifierBouteille(Bouteille bouteille) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void supprimerBouteille(Integer id) {
+		// TODO Auto-generated method stub
+		bouteilleRepository.deleteById(id);
 	}
 
 }

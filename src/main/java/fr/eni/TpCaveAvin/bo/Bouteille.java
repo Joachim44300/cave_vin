@@ -2,26 +2,51 @@ package fr.eni.TpCaveAvin.bo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Bouteille {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@NotBlank
+	@Size(message = "Le nom doit être comprise entre 5 et 50 caractère", min = 5, max = 50)
 	private String nom;
 	private boolean isPetillant;
 	private String millesime;
+	@Min(value = 1)
 	private int quantite;
+	@NotNull
 	@ManyToOne
 	private Couleur couleur;
+	@NotNull
 	@ManyToOne
 	private Region region;
 
-	public Bouteille(String nom, boolean isPetillant, String millesime, int quantite, Couleur couleur, Region region) {
+	public Bouteille() {
+
+	}
+
+	public Bouteille(int id, String nom, boolean isPetillant, String millesime, int quantite) {
 		super();
+		this.id = id;
+		this.nom = nom;
+		this.isPetillant = isPetillant;
+		this.millesime = millesime;
+		this.quantite = quantite;
+	}
+
+	public Bouteille(int id, String nom, boolean isPetillant, String millesime, int quantite, Couleur couleur,
+			Region region) {
+		super();
+		this.id = id;
 		this.nom = nom;
 		this.isPetillant = isPetillant;
 		this.millesime = millesime;
@@ -89,7 +114,7 @@ public class Bouteille {
 	@Override
 	public String toString() {
 		return "Bouteille [id=" + id + ", nom=" + nom + ", isPetillant=" + isPetillant + ", millesime=" + millesime
-				+ ", quantite=" + quantite + ", couleur=" + couleur + ", region=" + region + "]";
+				+ ", quantite=" + quantite + "]";
 	}
 
 }
