@@ -114,7 +114,7 @@ public class Bouteille {
 	@Override
 	public String toString() {
 		return "Bouteille [id=" + id + ", nom=" + nom + ", isPetillant=" + isPetillant + ", millesime=" + millesime
-				+ ", quantite=" + quantite + "]";
+				+ ", quantite=" + quantite + ", couleur=" + couleur + ", region=" + region + "]";
 	}
 
 }

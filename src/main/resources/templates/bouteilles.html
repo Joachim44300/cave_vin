@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cave à vin</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+	<nav class="navbar" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+			<a class="navbar-item" href="https://bulma.io"> <img
+				src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+			</a> <a role="button" class="navbar-burger" aria-label="menu"
+				aria-expanded="false" data-target="navbarBasicExample"> <span
+				aria-hidden="true"></span> <span aria-hidden="true"></span> <span
+				aria-hidden="true"></span>
+			</a>
+		</div>
+
+		<div id="navbarBasicExample" class="navbar-menu">
+			<div class="navbar-start">
+				<a class="navbar-item">
+					<h1>Cave à vin</h1>
+				</a>
+
+			</div>
+
+			<div class="navbar-end">
+				<div class="navbar-item">
+					<div class="buttons">
+						<a href="/bouteilles" class="button is-primary"> <strong>Bouteille</strong>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<h1>Les bouteilles</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom</th>
+				<th>Millésime</th>
+				<th>Quantité</th>
+				<th>Couleur</th>
+				<th>Région</th>
+				<th>Pétillant</th>
+			</tr>
+		</thead>
+		<tbody id="tbody">
+
+		</tbody>
+	</table>
+
+	<input id="urlgetBouteilles" name="urlgetBouteilles" type="hidden"
+		value="http://localhost:8080/rest/bouteilles">
+</body>
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+		url = document.querySelector("#urlgetBouteilles").value;
+		console.log('HTML prêt !');
+		console.log(url);
+		fetch(url).then(function(response) {
+			// Récupérer le corps de la requete en JSON
+			return response.json();
+		}).then(function(json) {
+			// Utiliser notre objet JSON
+			console.log(json);
+			table(json);
+			tri();
+		});
+	});
+
+	function table(json) {
+		var tblBody = document.querySelector("#tbody");
+
+		json.forEach(function(item) {
+			var row = document.createElement("tr");
+			for (i in item) {
+				if (i == 'couleur') {
+					var cell = document.createElement("td");
+					var cellText = document.createTextNode(item[i]['nom']);
+					cell.appendChild(cellText);
+					row.appendChild(cell);
+				} else if (i == 'region') {
+					var cell = document.createElement("td");
+					var cellText = document.createTextNode(item[i]['nom']);
+					cell.appendChild(cellText);
+					row.appendChild(cell);
+				} else {
+					var cell = document.createElement("td");
+					var cellText = document.createTextNode(item[i]);
+					cell.appendChild(cellText);
+					row.appendChild(cell);
+				}
+			}
+			tblBody.appendChild(row);
+		})
+
+		// add the row to the end of the table body
+
+	};
+	
+	function tri(){
+		const compare = (ids, asc) => (row1, row2) => {
+			  const tdValue = (row, ids) => row.children[ids].textContent;
+			  const tri = (v1, v2) => v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2);
+			  return tri(tdValue(asc ? row1 : row2, ids), tdValue(asc ? row2 : row1, ids));
+			};
+
+			const tbody = document.querySelector('tbody');
+			const thx = document.querySelectorAll('th');
+			const trxb = tbody.querySelectorAll('tr');
+			thx.forEach(th => th.addEventListener('click', () => {
+			  let classe = Array.from(trxb).sort(compare(Array.from(thx).indexOf(th), this.asc = !this.asc));
+			  classe.forEach(tr => tbody.appendChild(tr));
+			}));
+	}
+</script>
+</html>
