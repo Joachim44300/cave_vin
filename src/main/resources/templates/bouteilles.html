@@ -20,7 +20,7 @@
 
 		<div id="navbarBasicExample" class="navbar-menu">
 			<div class="navbar-start">
-				<a class="navbar-item">
+				<a href="/index" class="navbar-item">
 					<h1>Cave à vin</h1>
 				</a>
 
@@ -36,7 +36,8 @@
 			</div>
 		</div>
 	</nav>
-	<h1>Les bouteilles</h1>
+	<hr>
+	<h4 class="title is-4">Les bouteilles</h4>
 	<table class="table">
 		<thead>
 			<tr>
@@ -98,25 +99,38 @@
 			}
 			tblBody.appendChild(row);
 		})
-
-		// add the row to the end of the table body
-
 	};
 	
 	function tri(){
-		const compare = (ids, asc) => (row1, row2) => {
-			  const tdValue = (row, ids) => row.children[ids].textContent;
-			  const tri = (v1, v2) => v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2);
-			  return tri(tdValue(asc ? row1 : row2, ids), tdValue(asc ? row2 : row1, ids));
-			};
-
-			const tbody = document.querySelector('tbody');
-			const thx = document.querySelectorAll('th');
-			const trxb = tbody.querySelectorAll('tr');
-			thx.forEach(th => th.addEventListener('click', () => {
-			  let classe = Array.from(trxb).sort(compare(Array.from(thx).indexOf(th), this.asc = !this.asc));
-			  classe.forEach(tr => tbody.appendChild(tr));
-			}));
+		const compare = function(ids, asc){
+		  return function(row1, row2){
+		    const tdValue = function(row, ids){
+		      return row.children[ids].textContent;
+		    }
+		    const tri = function(v1, v2){
+		      if (v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2)){
+		        return v1 - v2;
+		      }
+		      else {
+		        return v1.toString().localeCompare(v2);
+		      }
+		      return v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2);
+		    };
+		    return tri(tdValue(asc ? row1 : row2, ids), tdValue(asc ? row2 : row1, ids));
+		  }
+		}
+		
+		const tbody = document.querySelector('tbody');
+		const thx = document.querySelectorAll('th');
+		const trxb = tbody.querySelectorAll('tr');
+		thx.forEach(function(th){
+		  th.addEventListener('click', function(){
+		    let classe = Array.from(trxb).sort(compare(Array.from(thx).indexOf(th), this.asc = !this.asc));
+		    classe.forEach(function(tr){
+		       tbody.appendChild(tr)
+		    });
+		  })
+		});
 	}
 </script>
 </html>
