@@ -72,6 +72,7 @@ public class BouteilleServiceImpl implements BouteilleService {
 	@Override
 	public void modifierBouteille(Bouteille bouteille) {
 		// TODO Auto-generated method stub
+		bouteilleRepository.save(bouteille);
 
 	}
 
@@ -81,4 +82,18 @@ public class BouteilleServiceImpl implements BouteilleService {
 		bouteilleRepository.deleteById(id);
 	}
 
+	@Override
+	public String getError(Bouteille bouteille) {
+		// TODO Auto-generated method stub
+		String error_message = "";
+		if (bouteille.getQuantite() < 1) {
+			error_message = "La quantité doit être supérieur à zéro";
+		} else if (bouteille.getCouleur() == null || bouteille.getRegion() == null) {
+			error_message = "La couleur et la région sont obligatoires";
+		} else if (bouteille.getNom().length() < 5 || bouteille.getNom().length() > 50) {
+			error_message = "Le nom doit être compris entre 5 et 50 caractères";
+		}
+		return error_message;
+
+	}
 }

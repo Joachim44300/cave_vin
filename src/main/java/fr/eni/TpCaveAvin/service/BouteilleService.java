@@ -26,4 +26,6 @@ public interface BouteilleService {
 
 	public void supprimerBouteille(Integer id);
 
+	public String getError(Bouteille bouteille);
+
 }
